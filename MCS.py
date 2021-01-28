@@ -6,7 +6,7 @@ from discord.ext import commands
 
 bot = commands.Bot(command_prefix='!')
 client = discord.Client()
-token = 'ODA0MzU3NTEyMzI0NTc5MzI5.YBLKTw.sVjlMRHHCtISNJAHEp--5ZDLTxw'
+token = 'TOKEN'
 
 @commands.cooldown(1, 900, commands.BucketType.user)
 
