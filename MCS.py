@@ -1,6 +1,5 @@
 from discord.ext.commands.core import command
 import discord
-import time
 import random
 from discord.ext import commands
 
