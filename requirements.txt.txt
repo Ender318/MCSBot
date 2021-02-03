@@ -1,1 +1,0 @@
-discord.py>=1.6,<1.7        # https://github.com/Rapptz/discord.py
