@@ -2,10 +2,10 @@ from discord.ext.commands.core import command
 import discord
 import random
 from discord.ext import commands
+from .local import TOKEN
 
 bot = commands.Bot(command_prefix='!')
 client = discord.Client()
-token = 'TOKEN'
 
 @commands.cooldown(1, 900, commands.BucketType.user)
 
@@ -42,4 +42,4 @@ async def bot_error(ctx, error):
         raise error
 
 
-bot.run(token)
+bot.run(TOKEN)
