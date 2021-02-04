@@ -2,7 +2,7 @@ from discord.ext.commands.core import command
 import discord
 import random
 from discord.ext import commands
-from .local import TOKEN
+from local import TOKEN
 
 bot = commands.Bot(command_prefix='!')
 client = discord.Client()
