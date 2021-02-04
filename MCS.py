@@ -2,7 +2,8 @@ from discord.ext.commands.core import command
 import discord
 import random
 from discord.ext import commands
-from local import TOKEN
+from local import TOKEN, SHIELDED
+
 
 bot = commands.Bot(command_prefix='!')
 client = discord.Client()
@@ -17,7 +18,7 @@ async def boop(ctx):
     userid = user[0].id
     boops = ['*boop*', '**boop**', 'bOoP', '~~boop~~', 'BOOOOOOOP', 'boop?', 'boop.', 'MEGA BOOP', '**ULTRA BOOP!!!!**']
     boop = random.choice(boops)
-    if userid == YONI_ID:
+    if userid in SHIELDED:
         boop_prefix = "bOoP bAcKfIrE! "
         userid = ctx.author.id
     
