@@ -9,15 +9,19 @@ client = discord.Client()
 
 @commands.cooldown(1, 900, commands.BucketType.user)
 
-
 # boops the mentioned user
 @bot.command(name='boop')
 async def boop(ctx):
+    boop_prefix = ""
     user = ctx.message.mentions
     userid = user[0].id
     boops = ['*boop*', '**boop**', 'bOoP', '~~boop~~', 'BOOOOOOOP', 'boop?', 'boop.', 'MEGA BOOP', '**ULTRA BOOP!!!!**']
     boop = random.choice(boops)
-    theboop = str(boop) + " <@!" + str(userid) + ">"
+    if userid == YONI_ID:
+        boop_prefix = "bOoP bAcKfIrE! "
+        userid = ctx.author.id
+    
+    theboop = boop_prefix + str(boop) + " <@!" + str(userid) + ">"
     await ctx.send(theboop)
     await ctx.message.delete()
 
