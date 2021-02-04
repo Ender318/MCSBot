@@ -2,13 +2,12 @@ from discord.ext.commands.core import command
 import discord
 import random
 from discord.ext import commands
-from local import TOKEN, SHIELDED
-
+from local import BOT_SETTINGS
 
 bot = commands.Bot(command_prefix='!')
 client = discord.Client()
 
-@commands.cooldown(1, 900, commands.BucketType.user)
+@commands.cooldown(1, BOT_SETTINGS["COOLDOWN"], commands.BucketType.user)
 
 # boops the mentioned user
 @bot.command(name='boop')
@@ -18,13 +17,12 @@ async def boop(ctx):
     userid = user[0].id
     boops = ['*boop*', '**boop**', 'bOoP', '~~boop~~', 'BOOOOOOOP', 'boop?', 'boop.', 'MEGA BOOP', '**ULTRA BOOP!!!!**']
     boop = random.choice(boops)
-    if userid in SHIELDED:
-        boop_prefix = "bOoP bAcKfIrE! "
+    if userid in BOT_SETTINGS["SHIELDED"]:
+        boop_prefix = "**bOoP bAcKfIrE!** "
         userid = ctx.author.id
-    
+    await ctx.message.delete()
     theboop = boop_prefix + str(boop) + " <@!" + str(userid) + ">"
     await ctx.send(theboop)
-    await ctx.message.delete()
 
 # audrey is not cool
 @bot.command(name='audrey_is_cool')
@@ -42,9 +40,9 @@ async def bot_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
         errorMessage = 'Please refrain yourself <@!' + str(ctx.author.id) + '>, try again in {:.2f}s'.format(error.retry_after)
         await ctx.send(errorMessage)
-        await ctx.message.delete()
+        await ctx.message.delete() # I think this might need to be earlier
     else:
         raise error
 
 
-bot.run(TOKEN)
+bot.run(BOT_SETTINGS["TOKEN"])
