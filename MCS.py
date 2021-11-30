@@ -1,14 +1,30 @@
-from discord.ext.commands.core import command
-import discord
 import random
+import datetime
+import discord
 from discord.ext import commands
+from discord.ext import tasks
+import feedparser
 from local import TOKEN
 
 bot = commands.Bot(command_prefix='!')
 client = discord.Client()
 
-@commands.cooldown(1, 900, commands.BucketType.user)
+@tasks.loop(minutes=30)
+async def blogger(ctx):
+    channel = bot.channel(634876030548574228)
+    currentTime = datetime.datetime.utcnow
+    minusThirty = datetime.time(hour = currentTime.hour, minute = currentTime.minute-30, second = 0)
+    blog = feedparser.parse('https://blog.flat.io/rss/')
+    if(currentTime.minute == 0 | currentTime.minute == 30):
+        postTime = blog.entries[0].published_parsed
+        postingTime = datetime.time(hour = postTime[3], minute = postTime[4], second = postTime[5])
+        if(postingTime <= currentTime & postingTime > minusThirty):
+            message = blog.entries[0].link
+            await channel.send(message)
 
+        
+
+@commands.cooldown(1, 900, commands.BucketType.user)
 
 # boops the mentioned user
 @bot.command(name='boop')
